@@ -1,37 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Posts</h2>
+<div class="row">
+    <div class="col-12 d-flex justify-content-between align-items-center mb-3 flex-wrap">
+        <h2 class="mb-2 mb-md-0">Posts</h2>
 
-<!-- ✅ Create button only for logged-in users -->
-{% if current_user.is_authenticated %}
-    <a href="{{ url_for('posts.create') }}" class="btn btn-primary mb-3">
-        Create Post
-    </a>
-{% endif %}
-
-{% for post in posts %}
-<div class="card mb-2">
-    <div class="card-body">
-        <h5>{{ post.title }}</h5>
-        <p>{{ post.content }}</p>
-        <small class="text-muted">
-            Posted on {{ post.created_at.strftime('%d %b %Y, %I:%M %p') }}
-        </small>
-
-        <!-- ✅ Edit/Delete only if user logged in -->
         {% if current_user.is_authenticated %}
-            <a href="{{ url_for('posts.edit', id=post.id) }}" 
-               class="btn btn-warning btn-sm">
-                Edit
-            </a>
-
-            <a href="{{ url_for('posts.delete', id=post.id) }}" 
-               class="btn btn-danger btn-sm">
-                Delete
+            <a href="{{ url_for('posts.create') }}" 
+               class="btn btn-primary">
+                Create Post
             </a>
         {% endif %}
+    </div>
+</div>
 
+{% for post in posts %}
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm mb-3">
+            <div class="card-body">
+
+                <h5 class="card-title">{{ post.title }}</h5>
+
+                <p class="card-text">
+                    {{ post.content }}
+                </p>
+
+                <div class="d-flex flex-column flex-md-row 
+                            justify-content-between 
+                            align-items-start align-items-md-center 
+                            gap-2">
+
+                    <small class="text-muted">
+                        Posted on {{ post.created_at.strftime('%d %b %Y, %I:%M %p') }}
+                    </small>
+
+                    {% if current_user.is_authenticated %}
+                        <div class="d-flex gap-2">
+                            <a href="{{ url_for('posts.edit', id=post.id) }}" 
+                               class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
+
+                            <a href="{{ url_for('posts.delete', id=post.id) }}" 
+                               class="btn btn-danger btn-sm">
+                                Delete
+                            </a>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 {% endfor %}
