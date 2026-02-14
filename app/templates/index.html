@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Posts</h2>
+
+<!-- ✅ Create button only for logged-in users -->
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('posts.create') }}" class="btn btn-primary mb-3">
+        Create Post
+    </a>
+{% endif %}
+
+{% for post in posts %}
+<div class="card mb-2">
+    <div class="card-body">
+        <h5>{{ post.title }}</h5>
+        <p>{{ post.content }}</p>
+        <small class="text-muted">
+            Posted on {{ post.created_at.strftime('%d %b %Y, %I:%M %p') }}
+        </small>
+
+        <!-- ✅ Edit/Delete only if user logged in -->
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('posts.edit', id=post.id) }}" 
+               class="btn btn-warning btn-sm">
+                Edit
+            </a>
+
+            <a href="{{ url_for('posts.delete', id=post.id) }}" 
+               class="btn btn-danger btn-sm">
+                Delete
+            </a>
+        {% endif %}
+
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
