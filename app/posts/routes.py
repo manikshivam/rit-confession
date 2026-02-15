@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash,request
 from flask_login import login_required, current_user
 from . import posts_bp
 from .forms import PostForm
@@ -7,9 +7,16 @@ from ..extensions import db
 
 @posts_bp.route("/")
 def index():
+    page = request.args.get('page', 1, type=int)
     #posts = Post.query.all()
-    posts = Post.query.order_by(Post.id.desc()).all()
+    posts = Post.query.order_by(Post.id.desc()).paginate(
+        page=page,
+        per_page=10,
+        error_out=False
+    )
+
     return render_template("index.html", posts=posts)
+
 
 
 @posts_bp.route("/create", methods=["GET", "POST"])
