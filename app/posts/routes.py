@@ -7,7 +7,8 @@ from ..extensions import db
 
 @posts_bp.route("/")
 def index():
-    posts = Post.query.all()
+    #posts = Post.query.all()
+    posts = Post.query.order_by(Post.id.desc()).all()
     return render_template("index.html", posts=posts)
 
 
