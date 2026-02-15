@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 <title>{% block tital %}Home{% endblock %}</title>
+
 {% block content %}
 
 <div class="row">
@@ -27,10 +28,24 @@
                     {{ post.content }}
                 </p>
 
+                <!-- LIKE SECTION (Works Without Login) -->
+                <div class="mt-3">
+                    <button 
+                        class="btn btn-outline-primary btn-sm like-btn"
+                        data-post-id="{{ post.id }}">
+                        👍 Like
+                    </button>
+
+                    <span class="ms-2">
+                        Likes: 
+                        <span class="like-count" id="like-count-{{ post.id }}">0</span>
+                    </span>
+                </div>
+
                 <div class="d-flex flex-column flex-md-row 
                             justify-content-between 
                             align-items-start align-items-md-center 
-                            gap-2">
+                            gap-2 mt-3">
 
                     <small class="text-muted">
                         Posted on {{ post.created_at.strftime('%d %b %Y, %I:%M %p') }}
@@ -58,4 +73,65 @@
 </div>
 {% endfor %}
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const likeButtons = document.querySelectorAll(".like-btn");
+
+    likeButtons.forEach(button => {
+
+        const postId = button.dataset.postId;
+        const countSpan = document.getElementById("like-count-" + postId);
+
+        const likeKey = "post-" + postId + "-likes";
+        const likedKey = "post-" + postId + "-liked";
+
+        // Load saved likes
+        let likes = parseInt(localStorage.getItem(likeKey)) || 0;
+        countSpan.textContent = likes;
+
+        // Check if already liked
+        let isLiked = localStorage.getItem(likedKey) === "true";
+
+        if (isLiked) {
+            button.classList.remove("btn-outline-primary");
+            button.classList.add("btn-primary");
+            button.textContent = "💙 Liked";
+        }
+
+        button.addEventListener("click", function () {
+
+            let currentLikes = parseInt(localStorage.getItem(likeKey)) || 0;
+            let liked = localStorage.getItem(likedKey) === "true";
+
+            if (!liked) {
+                currentLikes++;
+                localStorage.setItem(likeKey, currentLikes);
+                localStorage.setItem(likedKey, "true");
+
+                button.classList.remove("btn-outline-primary");
+                button.classList.add("btn-primary");
+                button.textContent = "💙 Liked";
+            } else {
+                currentLikes--;
+                if (currentLikes < 0) currentLikes = 0;
+
+                localStorage.setItem(likeKey, currentLikes);
+                localStorage.setItem(likedKey, "false");
+
+                button.classList.remove("btn-primary");
+                button.classList.add("btn-outline-primary");
+                button.textContent = "👍 Like";
+            }
+
+            countSpan.textContent = currentLikes;
+        });
+
+    });
+
+});
+</script>
 {% endblock %}
