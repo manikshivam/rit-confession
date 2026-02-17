@@ -17,6 +17,12 @@ def index():
 
     return render_template("index.html", posts=posts)
 
+@posts_bp.route("/like/<int:post_id>", methods=["POST"])
+def like_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    post.likes_count += 1
+    db.session.commit()
+    return jsonify({"likes": post.likes_count})
 
 
 @posts_bp.route("/create", methods=["GET", "POST"])
