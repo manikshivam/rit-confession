@@ -5,7 +5,7 @@ from .forms import RegisterForm, LoginForm
 from ..models import User
 from ..extensions import db
 
-@auth_bp.route("/re", methods=["GET", "POST"])
+@auth_bp.route("/re/abc", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():

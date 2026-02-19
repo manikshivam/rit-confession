@@ -46,7 +46,7 @@
       <!-- Left menu -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center text-lg-start">
         <li class="nav-item">
-          <a class="nav-link active" href="/">Blog</a>
+          <a class="nav-link active" href="/">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/about">About</a>
@@ -56,9 +56,9 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
+            Dropdown
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" style="background-color: rgb(7, 199, 145);">
             <li><a class="dropdown-item" href="/tictoe">Prpose Love</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -74,6 +74,9 @@
             <span class="nav-link">
                 Welcome, <strong>{{ current_user.username }}</strong>
             </span>
+            <a class="nav-link" style="color: green;" href="auth/re/abc">
+                Create Admin
+            </a>
         </li>
 
         <li class="nav-item">
