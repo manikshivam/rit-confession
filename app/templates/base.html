@@ -74,7 +74,7 @@
             <span class="nav-link">
                 Welcome, <strong>{{ current_user.username }}</strong>
             </span>
-            <a class="nav-link" style="color: green;" href="auth/re/abc">
+            <a class="nav-link" style="color: green;"href="{{ url_for('auth.register') }}">
                 Create Admin
             </a>
         </li>
