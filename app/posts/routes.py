@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash,request
+from flask import render_template, redirect, url_for, flash,request,jsonify
 from flask_login import login_required, current_user
 from . import posts_bp
 from .forms import PostForm

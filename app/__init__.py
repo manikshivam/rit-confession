@@ -1,5 +1,5 @@
 from flask import Flask,render_template
-from .extensions import db, login_manager
+from .extensions import db, login_manager, mail
 from .auth.routes import auth_bp
 from .posts.routes import posts_bp
 from .games.routes import game
@@ -12,6 +12,7 @@ def create_app():
 
     db.init_app(app)
     login_manager.init_app(app)
+    mail.init_app(app)
 
     login_manager.login_view = "auth.login"
 
