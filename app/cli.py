@@ -12,11 +12,11 @@ def register_commands(app):
         """Create user from terminal"""
 
         if User.query.filter_by(email=email).first():
-            print("Email already exists!")
+            #print("Email already exists!")
             return
 
         if User.query.filter_by(username=username).first():
-            print("Username already exists!")
+            #print("Username already exists!")
             return
 
         user = User(username=username, email=email)
@@ -25,4 +25,4 @@ def register_commands(app):
         db.session.add(user)
         db.session.commit()
 
-        print(f"User '{username}' created successfully!")
+        #print(f"User '{username}' created successfully!")
