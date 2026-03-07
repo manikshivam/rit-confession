@@ -4,3 +4,4 @@ env
 __pycache__
 
 instance
+flask create-user admin admin@gmail.com 12312323

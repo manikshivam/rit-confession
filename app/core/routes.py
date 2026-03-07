@@ -1,8 +1,7 @@
-import os
-import mailtrap as mt
 from flask import render_template, request, redirect, flash
+from flask_mail import Message
 from . import core
-from config import Config
+from ..extensions import mail
 
 @core.route("/contact", methods=["GET", "POST"])
 def contact():
@@ -12,28 +11,21 @@ def contact():
         phone = request.form.get("phone")
         message = request.form.get("message")
 
-        mail = mt.Mail(
-            sender=mt.Address(
-                email="hello@demomailtrap.co",
-                name="Website Contact"
-            ),
-            to=[mt.Address(email="manikshivam708@gmail.com")],
-            subject=f"New message from {name}",
-            text=f"""
-Name: {name}
-Email: {email}
-Phone: {phone}
-
-Message:
-{message}
-""",
-            category="Contact Form",
+        msg = Message(
+            subject="New Contact Form Message",
+            recipients=["your_email@gmail.com"]
         )
+        msg.body = f"""
+        Name: {name}
+        Email: {email}
+        Phone: {phone}
 
-        client = mt.MailtrapClient(token=Config.MAILTRAP_API_TOKEN)
-        client.send(mail)
+        Message:
+        {message}
+        """
+        mail.send(msg)
 
-        flash("Message sent successfully!", "success")
+        flash("Thank you for your message! We will get back to you soon.", "success")
         return redirect("/contact")
 
     return render_template("contact.html")
