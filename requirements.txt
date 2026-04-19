@@ -1,5 +1,6 @@
 blinker==1.9.0
 click==8.3.2
+cockroachdb==0.3.5
 dnspython==2.8.0
 dotenv==0.9.9
 email-validator==2.3.0
@@ -19,4 +20,3 @@ SQLAlchemy==2.0.49
 typing_extensions==4.15.0
 Werkzeug==3.1.8
 WTForms==3.2.1
-gunicorn
