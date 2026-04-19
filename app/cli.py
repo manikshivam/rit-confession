@@ -20,7 +20,7 @@ def register_commands(app):
             return
 
         user = User(username=username, email=email)
-        user.set_password(password)   # ✅ uses your model method
+        user.set_password(password)   
 
         db.session.add(user)
         db.session.commit()
